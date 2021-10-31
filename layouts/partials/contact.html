@@ -4,6 +4,15 @@
 		{{ with .Site.Params.contact.title }}<h2>{{ . }}</h2>{{ end }}
 		{{ with .Site.Params.contact.content }}<p>{{ . | markdownify }}</p>{{ end }}
 	{{ end }}
+	{{ $form_id := "" }}
+	{{ if .Site.Params.contact.formspree_form_id }}
+		{{ $form_id = .Site.Params.contact.formspree_form_id}}
+	{{ else }}
+		{{ errorf "Please set a form id for the contact form using the `formspree_form_id` parameter in `config.toml`. Otherwise, set `email_form = 0` to disable the contact form." }}
+	{{ end }}
+	{{ if not .Site.Params.contact.email }}
+		{{ errorf "Please set an email address for the contact form using the `email` parameter in `config.toml`. Otherwise, set `email_form = 0` to disable the contact form." }}
+	{{ end }}
 	<div class="row" id="contact-form">
 		{{ if (isset .Site.Params.contact "email") | and (gt (len .Site.Params.contact.email) 0) }}
 		<div class="8u 12u$(small)">
