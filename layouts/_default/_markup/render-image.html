@@ -29,9 +29,7 @@
         />
         {{ if .Title }}
             <figcaption>
-                <p>
-                    {{ .Title | markdownify }}
-                </p> 
+                {{ .Title | markdownify }}
             </figcaption>
         {{ end }}
     </figure>
