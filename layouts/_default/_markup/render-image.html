@@ -1,0 +1,37 @@
+{{/*
+    Source: https://cpbotha.net/2020/05/02/drop-in-replacement-for-hugo-figure-shortcode-with-img-srcset-support/
+    Modified by Austin McConnell
+    */}}
+
+    {{/* hugo will resize to all of these sizes that are smaller than the original*/}}
+    {{ $sizes := (slice "480" "800" "1200" "1500") }}
+
+    {{/* get file that matches the filename as specified as src="" in shortcode */}}
+    {{ $src := .Page.Resources.GetMatch (printf "%s" (.Destination | safeURL))  }}
+
+    <figure class="image fit">
+        <img
+            sizes="(min-width: 35em) 1200px, 100vw"
+            {{/* only srcset images smaller than or equal to the src (original) image size, as Hugo will upscale small images */}}  
+            srcset='
+            {{ range $sizes }}
+                    {{ ($src.Resize (printf "%sx webp" .)).Permalink }} {{ (printf "%sw" .) }},
+            {{ end }}'
+
+            {{/* when no support for srcset (old browsers, RSS), we load small (800px) */}}
+            {{/* if image smaller than 800, then load the image itself */}}
+            {{ if ge $src.Width "800" }}
+                src="{{ ($src.Resize "800x").Permalink }}"
+            {{ else }}
+                src="{{ $src.Permalink }}"
+            {{ end }}
+
+        />
+        {{ if .Title }}
+            <figcaption>
+                <p>
+                    {{ .Title | markdownify }}
+                </p> 
+            </figcaption>
+        {{ end }}
+    </figure>
