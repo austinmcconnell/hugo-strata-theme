@@ -1,4 +1,4 @@
-<i class="fa fa-calendar"></i>&nbsp;&nbsp;
+<i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
 <time datetime="{{ .Date }}">{{ .Date.Format .Site.Params.date_format }}</time>&nbsp;&nbsp;
 
 {{ if .Site.Params.Show_read_time }}{{ .ReadingTime }} min read&nbsp;&nbsp;{{ end }}
@@ -6,7 +6,7 @@
 {{ if isset .Params "categories" }}
     {{ $categoriesLen := len .Params.categories }}
     {{ if gt $categoriesLen 0 }}
-        <i class="fa fa-folder"></i>&nbsp;&nbsp;
+        <i class="fas fa-folder"></i>&nbsp;&nbsp;
         {{ range $k, $v := .Params.categories }}
         <a class="article-category-link" href="{{ $.Site.BaseURL }}categories/{{ . | urlize | lower }}">{{ . }}</a>
         {{ if lt $k (sub $categoriesLen 1) }}&middot;{{ end }}
@@ -17,7 +17,7 @@
 {{ if isset .Params "tags" }}
    {{ $tagsLen := len .Params.tags }}
    {{ if gt $tagsLen 0 }}
-       &nbsp;&nbsp;<i class="fa fa-tags"></i>&nbsp;&nbsp;
+       &nbsp;&nbsp;<i class="fas fa-tags"></i>&nbsp;&nbsp;
        {{ range $k, $v := .Params.tags }}
        <a class="article-category-link" href="{{ $.Site.BaseURL }}tags/{{ . | urlize | lower }}">{{ . }}</a>
        {{ if lt $k (sub $tagsLen 1) }}&middot;{{ end }}
